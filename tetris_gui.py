@@ -17,11 +17,11 @@ class Board(QFrame):
 
 
 class Tetris(QMainWindow):
-    def __init__(self, grid_size, ai=None):
+    def __init__(self, grid_size=20, ai=None):
         super().__init__()
         # set up the timer
         self.timer = QBasicTimer()
-        self.timer.start(1000, self)
+        self.timer.start(3000, self)
 
         self.grid_size = grid_size
         self.height = grid_size * 20
@@ -51,10 +51,13 @@ class Tetris(QMainWindow):
             self.tetris_board.rotate(direction="right")
 
     def timerEvent(self, event: QTimerEvent):
-        self.tetris_board.move_down()
+
         if type(self.tetris_board) == tetris_ai.AI:
-            self.tetris_board.random_move()
-            self.tetris_board.random_rotate()
+            self.tetris_board.scan_lines()
+            self.tetris_board.reachability()
+
+        self.tetris_board.move_down()
+
         self.update()
 
     def paintEvent(self, event: QPaintEvent):
@@ -67,12 +70,12 @@ class Tetris(QMainWindow):
                     painter.fillRect(i * self.grid_size, j * self.grid_size,
                                      self.grid_size, self.grid_size, color)
         # draw current piece
-        for coordinate_x, coordinate_y in self.tetris_board.get_current_piece_coordinate():
+        for coordinate_x, coordinate_y in self.tetris_board.get_piece_coordinate():
             painter.fillRect(coordinate_x * self.grid_size, coordinate_y * self.grid_size,
                              self.grid_size, self.grid_size, color)
 
 
 if __name__ == "__main__":
     app = QApplication([])
-    tetris = Tetris(grid_size=20, ai=True)
+    tetris = Tetris(grid_size=20, ai="Yes")
     sys.exit(app.exec_())

@@ -8,30 +8,45 @@ class AI(Board):
     def foo(self, list_coordinates):
         move = []
         for i in self.reach_coordinate(list_coordinates):
-            if i:
-                move = i
-                break
+            for j in i[1]:
+                if j:
+                    move = i
+                    print(i)
+                    break
+
+        rotate_need = 0
         try:
-            print(self.reach_coordinate(list_coordinates))
-            self.move(direction=move[0])
+            rotate_need = move[0] - self.current_rotate_index
         except IndexError:
             pass
+        if rotate_need > 0:
+            self.rotate(direction="left")
+        elif rotate_need < 0:
+            self.rotate(direction="right")
+        else:
+            pass
+        try:
+            for i in move[1]:
+                if i:
+                    self.move(direction=i[0])
         except TypeError:
+            pass
+        except IndexError:
             pass
 
     def reach_coordinate(self, list_coordinates):
         list_reach = []
-        foo = []
-        for coordinates in list_coordinates:
-            list_reach.append(self.reachability(coordinate=coordinates))
-        if list_reach == foo:
-            print(list_coordinates)
+        for rotate_index in range(len(self.piece_coordinate[self.current_piece])):
+            current_reach_coordinate = []
+            for coordinates in list_coordinates:
+                current_reach_coordinate.append(self.reachability(coordinate=coordinates, rotate_index=rotate_index))
+            list_reach.append([rotate_index, current_reach_coordinate])
         return list_reach
 
-    def reachability(self, coordinate):
+    def reachability(self, coordinate, rotate_index):
         # get the board coordinate of the assumption piece
         piece_coordinate = []
-        for x, y in (self.piece_coordinate[self.current_piece][self.current_rotate_offset]):
+        for x, y in (self.piece_coordinate[self.current_piece][rotate_index]):
             piece_coordinate.append([x + coordinate[0], y + coordinate[1]])
 
         # check if the piece is fit first
@@ -47,7 +62,7 @@ class AI(Board):
         # check if piece can reach the target (# in case of blocking on the way)
         for i in range(1, x_distance + 1, 1):
             coordinate = []
-            for x, y in self.piece_coordinate[self.current_piece][self.current_rotate_offset]:
+            for x, y in self.piece_coordinate[self.current_piece][self.current_rotate_index]:
 
                 if x_distance > 0:
                     x += self.current_piece_coordinate_x - i
@@ -81,3 +96,4 @@ class AI(Board):
                     empty_cells.append([x, y])
                     empty_cell_count += 1
             break
+

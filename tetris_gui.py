@@ -56,8 +56,8 @@ class Tetris(QMainWindow):
             self.tetris_board.scan_lines()
             list_coordinates = []
             for i in range(10):
-                list_coordinates.append([i, 19])
                 list_coordinates.append([i, 18])
+                list_coordinates.append([i, 17])
             self.tetris_board.foo(list_coordinates)
 
         self.tetris_board.move_down()

@@ -44,7 +44,7 @@ class Board:
         self.current_piece_coordinate_x = 4
         # self.current_piece_x = 4 means that the piece will spawn at the center of the board
         self.current_piece_coordinate_y = 0
-        self.current_rotate_offset = 0
+        self.current_rotate_index = 0
 
         self.next_piece = random.choice(self.piece_name)
 
@@ -58,7 +58,7 @@ class Board:
             # generate next piece
             self.current_piece = self.next_piece
             self.next_piece = random.choice(self.piece_name)
-            self.current_rotate_offset = 0
+            self.current_rotate_index = 0
             self.current_piece_coordinate_x = 4
             self.current_piece_coordinate_y = 0
             # check for lines clear
@@ -72,8 +72,8 @@ class Board:
     def rotate(self, direction):
         k = 1 if direction == "left" else - 1 if direction == "right" else 0
         if self.check_fit_availability(coordinate=self.get_piece_coordinate(rotate_direction=k)):
-            self.current_rotate_offset = \
-                (self.current_rotate_offset + k) % len(self.piece_coordinate[self.current_piece])
+            self.current_rotate_index = \
+                (self.current_rotate_index + k) % len(self.piece_coordinate[self.current_piece])
 
     def get_piece_coordinate(self, rotate_direction=0, move_direction=0, move_down=0):
 
@@ -86,7 +86,7 @@ class Board:
         :return: List of board coordinates of current piece
         """
         piece_coordinate_in_board = []
-        for x, y in self.piece_coordinate[self.current_piece][(self.current_rotate_offset + rotate_direction) % len(self.piece_coordinate[self.current_piece])]:
+        for x, y in self.piece_coordinate[self.current_piece][(self.current_rotate_index + rotate_direction) % len(self.piece_coordinate[self.current_piece])]:
             piece_coordinate_in_board.append([x + self.current_piece_coordinate_x + move_direction,
                                               y + self.current_piece_coordinate_y + move_down])
         return piece_coordinate_in_board

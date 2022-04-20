@@ -6,21 +6,25 @@ from tetris_gui import Tetris
 
 if __name__ == "__main__":
     app = QApplication([])
-    sample_tetris = Tetris(ai="yes")
+    sample_tetris = Tetris(ai="bruh", speed=500)
+    sample_tetris.tetris_board.board_coordinate[2][19] = 1
+    sample_tetris.tetris_board.board_coordinate[3][19] = 1
 
-    for y in range(4, 20, 1):
-        for x in range(9):
-            sample_tetris.tetris_board.board_coordinate[x][y] = 1
+    sample_tetris.tetris_board.board_coordinate[4][19] = 1
+    sample_tetris.tetris_board.board_coordinate[5][19] = 1
+    sample_tetris.tetris_board.board_coordinate[6][19] = 1
+    sample_tetris.tetris_board.board_coordinate[7][19] = 1
+    sample_tetris.tetris_board.board_coordinate[8][19] = 1
+    sample_tetris.tetris_board.board_coordinate[9][19] = 1
 
-    sample_tetris.tetris_board.board_coordinate[0][4] = 0
-    sample_tetris.tetris_board.board_coordinate[1][4] = 0
-    sample_tetris.tetris_board.board_coordinate[2][4] = 0
-    sample_tetris.tetris_board.board_coordinate[3][4] = 0
-
-    sample_tetris.tetris_board.board_coordinate[0][5] = 0
-    sample_tetris.tetris_board.board_coordinate[1][5] = 0
-    sample_tetris.tetris_board.board_coordinate[2][5] = 0
-    sample_tetris.tetris_board.board_coordinate[3][5] = 0
+    sample_tetris.tetris_board.board_coordinate[2][18] = 1
+    sample_tetris.tetris_board.board_coordinate[3][18] = 1
+    sample_tetris.tetris_board.board_coordinate[4][18] = 1
+    sample_tetris.tetris_board.board_coordinate[5][18] = 1
+    sample_tetris.tetris_board.board_coordinate[6][18] = 1
+    sample_tetris.tetris_board.board_coordinate[7][18] = 1
+    sample_tetris.tetris_board.board_coordinate[8][18] = 1
+    sample_tetris.tetris_board.board_coordinate[9][18] = 1
 
     sample_tetris.tetris_board.current_piece = "O_piece"
     sys.exit(app.exec_())

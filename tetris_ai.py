@@ -1,5 +1,3 @@
-import random
-
 from tetris_model import Board
 
 
@@ -7,39 +5,72 @@ class AI(Board):
     def __init__(self):
         super().__init__()
 
-    def random_move(self):
-        random_direction = random.choice(["left", "right", "no move"])
-        super().move(direction=random_direction)
+    def foo(self, list_coordinates):
+        move = []
+        for i in self.reach_coordinate(list_coordinates):
+            if i:
+                move = i
+                break
+        try:
+            print(self.reach_coordinate(list_coordinates))
+            self.move(direction=move[0])
+        except IndexError:
+            pass
+        except TypeError:
+            pass
 
-    def random_rotate(self):
-        random_direction = random.choice(["left", "right", "no move"])
-        super().rotate(direction=random_direction)
+    def reach_coordinate(self, list_coordinates):
+        list_reach = []
+        foo = []
+        for coordinates in list_coordinates:
+            list_reach.append(self.reachability(coordinate=coordinates))
+        if list_reach == foo:
+            print(list_coordinates)
+        return list_reach
 
-    def reachability(self):
-        coordinate = [0, 4]
+    def reachability(self, coordinate):
+        # get the board coordinate of the assumption piece
         piece_coordinate = []
         for x, y in (self.piece_coordinate[self.current_piece][self.current_rotate_offset]):
             piece_coordinate.append([x + coordinate[0], y + coordinate[1]])
-        if self.check_fit_availability(piece_coordinate):
-            print("can fit to the board")
-        else:
-            print("can not fit to the board")
 
+        # check if the piece is fit first
+        if not self.check_fit_availability(coordinate=piece_coordinate):
+            return False
+
+        # check if can reach the piece on time
         x_distance = self.current_piece_coordinate_x - coordinate[0]
         y_distance = self.current_piece_coordinate_y - coordinate[1]
-        reach_on_time = False
         if (abs(x_distance) - abs(y_distance)) > 0:
-            print("cant reach the destination coordinate on time")
-        else:
-            reach_on_time = True
-            print("can reach the destination one time")
+            return False
+
+        # check if piece can reach the target (# in case of blocking on the way)
+        for i in range(1, x_distance + 1, 1):
+            coordinate = []
+            for x, y in self.piece_coordinate[self.current_piece][self.current_rotate_offset]:
+
+                if x_distance > 0:
+                    x += self.current_piece_coordinate_x - i
+                if x_distance < 0:
+                    x += self.current_piece_coordinate_x + i
+                y += self.current_piece_coordinate_y + i
+
+                coordinate.append([x, y])
+            if not self.check_fit_availability(coordinate=coordinate):
+                return False
+
+        # check if the piece can move down
+        piece_coordinate = [[x, y + 1] for x, y in piece_coordinate]
+        if self.check_fit_availability(piece_coordinate):
+            return False
 
         if x_distance > 0:
-            self.move(direction="left")
+            return["left"] * abs(x_distance)
         elif x_distance < 0:
-            self.move(direction="right")
+            return ["right"] * abs(x_distance)
         else:
             pass
+        return True
 
     def scan_lines(self):
         for y in range(self.height - 1, -1, -1):
@@ -50,13 +81,3 @@ class AI(Board):
                     empty_cells.append([x, y])
                     empty_cell_count += 1
             break
-
-
-
-
-
-
-
-
-
-

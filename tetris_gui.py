@@ -17,11 +17,11 @@ class Board(QFrame):
 
 
 class Tetris(QMainWindow):
-    def __init__(self, grid_size=20, ai=None):
+    def __init__(self, grid_size=20, ai=None, speed=100):
         super().__init__()
         # set up the timer
         self.timer = QBasicTimer()
-        self.timer.start(3000, self)
+        self.timer.start(speed, self)
 
         self.grid_size = grid_size
         self.height = grid_size * 20
@@ -54,7 +54,11 @@ class Tetris(QMainWindow):
 
         if type(self.tetris_board) == tetris_ai.AI:
             self.tetris_board.scan_lines()
-            self.tetris_board.reachability()
+            list_coordinates = []
+            for i in range(10):
+                list_coordinates.append([i, 19])
+                list_coordinates.append([i, 18])
+            self.tetris_board.foo(list_coordinates)
 
         self.tetris_board.move_down()
 
@@ -77,5 +81,5 @@ class Tetris(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication([])
-    tetris = Tetris(grid_size=20, ai="Yes")
+    tetris = Tetris(grid_size=20)
     sys.exit(app.exec_())

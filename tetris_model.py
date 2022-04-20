@@ -12,23 +12,19 @@ class Board:
             [[0, 0], [0, 1], [1, 1], [2, 1]], [[0, 2], [1, 0], [1, 1], [1, 2]]
         ],
         'Z_piece': [
-            [[0, 0], [1, 0], [1, 1], [2, 1]], [[0, 1], [0, 2], [1, 0], [1, 1]],
             [[0, 0], [1, 0], [1, 1], [2, 1]], [[0, 1], [0, 2], [1, 0], [1, 1]]
         ],
         'O_piece': [
-            [[0, 0], [0, 1], [1, 0], [1, 1]], [[0, 0], [0, 1], [1, 0], [1, 1]],
-            [[0, 0], [0, 1], [1, 0], [1, 1]], [[0, 0], [0, 1], [1, 0], [1, 1]]
+            [[0, 0], [0, 1], [1, 0], [1, 1]]
         ],
         'L_piece': [
             [[0, 0], [0, 1], [1, 0], [2, 0]], [[0, 0], [0, 1], [0, 2], [1, 2]],
             [[0, 1], [1, 1], [2, 0], [2, 1]], [[0, 0], [1, 0], [1, 1], [1, 2]]
         ],
         'I_piece': [
-            [[0, 0], [1, 0], [2, 0], [3, 0]], [[0, 0], [0, 1], [0, 2], [0, 3]],
             [[0, 0], [1, 0], [2, 0], [3, 0]], [[0, 0], [0, 1], [0, 2], [0, 3]]
         ],
         'S_piece': [
-            [[0, 1], [1, 0], [1, 1], [2, 0]], [[0, 0], [0, 1], [1, 1], [1, 2]],
             [[0, 1], [1, 0], [1, 1], [2, 0]], [[0, 0], [0, 1], [1, 1], [1, 2]]
         ]
     }
@@ -76,7 +72,8 @@ class Board:
     def rotate(self, direction):
         k = 1 if direction == "left" else - 1 if direction == "right" else 0
         if self.check_fit_availability(coordinate=self.get_piece_coordinate(rotate_direction=k)):
-            self.current_rotate_offset = (self.current_rotate_offset + k) % 4
+            self.current_rotate_offset = \
+                (self.current_rotate_offset + k) % len(self.piece_coordinate[self.current_piece])
 
     def get_piece_coordinate(self, rotate_direction=0, move_direction=0, move_down=0):
 
@@ -89,7 +86,7 @@ class Board:
         :return: List of board coordinates of current piece
         """
         piece_coordinate_in_board = []
-        for x, y in self.piece_coordinate[self.current_piece][(self.current_rotate_offset + rotate_direction) % 4]:
+        for x, y in self.piece_coordinate[self.current_piece][(self.current_rotate_offset + rotate_direction) % len(self.piece_coordinate[self.current_piece])]:
             piece_coordinate_in_board.append([x + self.current_piece_coordinate_x + move_direction,
                                               y + self.current_piece_coordinate_y + move_down])
         return piece_coordinate_in_board
@@ -101,14 +98,17 @@ class Board:
         :return:
         """
 
-        for x, y in coordinate:
-            if x >= self.width or x <= -1:
-                return False
-            if y >= self.height:
-                return False
-            if self.board_coordinate[x][y] == 1:
-                return False
-        return True
+        try:
+            for x, y in coordinate:
+                if x >= self.width or x <= -1:
+                    return False
+                if y >= self.height:
+                    return False
+                if self.board_coordinate[x][y] == 1:
+                    return False
+            return True
+        except TypeError:
+            raise Exception("The coordinate {} is not in the right format".format(coordinate))
 
     def clear_lines(self):
         y = self.height - 1

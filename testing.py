@@ -6,34 +6,34 @@ from tetris_gui import Tetris
 
 if __name__ == "__main__":
     app = QApplication([])
-    sample_tetris = Tetris(ai="bruh", speed=500)
+    sample_tetris = Tetris(ai="bruh", speed=20000)
 
-    sample_tetris.tetris_board.board_coordinate[0][19] = 1
-    sample_tetris.tetris_board.board_coordinate[1][19] = 1
-    sample_tetris.tetris_board.board_coordinate[2][19] = 1
-    sample_tetris.tetris_board.board_coordinate[3][19] = 1
+    sample_tetris.tetris_board.board_coordinate[0][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[1][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[2][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[3][-1] = 1
 
-    sample_tetris.tetris_board.board_coordinate[7][19] = 1
-    sample_tetris.tetris_board.board_coordinate[8][19] = 1
-    sample_tetris.tetris_board.board_coordinate[9][19] = 1
+    sample_tetris.tetris_board.board_coordinate[7][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[8][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[9][-1] = 1
 
-    sample_tetris.tetris_board.board_coordinate[0][18] = 1
-    sample_tetris.tetris_board.board_coordinate[1][18] = 1
-    sample_tetris.tetris_board.board_coordinate[2][18] = 1
-    sample_tetris.tetris_board.board_coordinate[3][18] = 1
-    sample_tetris.tetris_board.board_coordinate[4][18] = 1
-    sample_tetris.tetris_board.board_coordinate[7][18] = 1
-    sample_tetris.tetris_board.board_coordinate[8][18] = 1
-    sample_tetris.tetris_board.board_coordinate[9][18] = 1
+    sample_tetris.tetris_board.board_coordinate[0][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[1][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[2][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[3][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[4][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[7][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[8][-1] = 1
+    sample_tetris.tetris_board.board_coordinate[9][-1] = 1
 
-    sample_tetris.tetris_board.board_coordinate[0][17] = 1
-    sample_tetris.tetris_board.board_coordinate[1][17] = 1
-    sample_tetris.tetris_board.board_coordinate[2][17] = 1
-    sample_tetris.tetris_board.board_coordinate[3][17] = 1
-    sample_tetris.tetris_board.board_coordinate[4][17] = 1
-    sample_tetris.tetris_board.board_coordinate[7][17] = 1
-    sample_tetris.tetris_board.board_coordinate[8][17] = 1
-    sample_tetris.tetris_board.board_coordinate[9][17] = 1
+    sample_tetris.tetris_board.board_coordinate[0][-2] = 1
+    sample_tetris.tetris_board.board_coordinate[1][-2] = 1
+    sample_tetris.tetris_board.board_coordinate[2][-2] = 1
+    sample_tetris.tetris_board.board_coordinate[3][-2] = 1
+    sample_tetris.tetris_board.board_coordinate[4][-2] = 1
+    sample_tetris.tetris_board.board_coordinate[7][-2] = 1
+    sample_tetris.tetris_board.board_coordinate[8][-2] = 1
+    sample_tetris.tetris_board.board_coordinate[9][-2] = 1
     #
-    sample_tetris.tetris_board.current_piece = "J_piece"
+    sample_tetris.tetris_board.current_piece = "I_piece"
     sys.exit(app.exec_())

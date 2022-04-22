@@ -80,12 +80,40 @@ class AI(Board):
             return False
 
         if x_distance > 0:
-            return["left"] * abs(x_distance)
+            return ["left"] * abs(x_distance)
         elif x_distance < 0:
             return ["right"] * abs(x_distance)
         else:
             pass
         return True
+
+    def reachability_dfs(self):
+        reachability_tetris_board = [[0] * self.height for _ in range(self.width)]
+        print(self.current_piece_coordinate_x, self.current_piece_coordinate_y)
+
+        for rotate in range(-1, 2):
+            print("current rotate index is: ", rotate)
+            for move in range(-1, 2):
+                print("current move is:", move)
+                coordinate_x = self.current_piece_coordinate_x + move
+                rotate_index = \
+                    (self.current_rotate_index + rotate) % len(self.piece_coordinate[self.current_piece])
+                coordinate_y = self.current_piece_coordinate_y + 1
+
+                coordinate = self.get_piece_coordinate(piece=self.current_piece,
+                                                       rotate_index=rotate_index,
+                                                       coordinate_x=coordinate_x,
+                                                       coordinate_y=coordinate_y)
+
+                if self.check_fit_availability(coordinate=coordinate):
+                    reachability_tetris_board[coordinate_x][coordinate_y] = [rotate, move]
+        print(reachability_tetris_board[self.top_offset])
+        print(reachability_tetris_board[self.top_offset + 1])
+        print(reachability_tetris_board[self.top_offset + 2])
+        print(reachability_tetris_board[self.top_offset + 3])
+        print(reachability_tetris_board[self.top_offset + 4])
+        print(reachability_tetris_board[self.top_offset + 5])
+
 
     def scan_lines(self):
         for y in range(self.height - 1, -1, -1):
@@ -96,4 +124,3 @@ class AI(Board):
                     empty_cells.append([x, y])
                     empty_cell_count += 1
             break
-

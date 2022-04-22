@@ -19,18 +19,20 @@ class Board(QFrame):
 class Tetris(QMainWindow):
     def __init__(self, grid_size=20, ai=None, speed=100):
         super().__init__()
+
         # set up the timer
         self.timer = QBasicTimer()
         self.timer.start(speed, self)
 
         self.grid_size = grid_size
-        self.height = grid_size * 20
-        self.width = grid_size * 10
 
         if ai is None:
             self.tetris_board = model.Board()
         else:
             self.tetris_board = ai_model.AI()
+
+        self.height = grid_size * (self.tetris_board.height - self.tetris_board.top_offset)
+        self.width = grid_size * self.tetris_board.width
 
         self.init_ui()
         self.show()
@@ -50,15 +52,18 @@ class Tetris(QMainWindow):
         elif event.text() == "d":
             self.tetris_board.rotate(direction="right")
 
+        self.update()
+
     def timerEvent(self, event: QTimerEvent):
 
         if type(self.tetris_board) == tetris_ai.AI:
-            self.tetris_board.scan_lines()
-            list_coordinates = []
-            for i in range(10):
-                list_coordinates.append([i, 18])
-                list_coordinates.append([i, 17])
-            self.tetris_board.foo(list_coordinates)
+            # self.tetris_board.scan_lines()
+            # list_coordinates = []
+            # for i in range(10):
+            #     list_coordinates.append([i, 18])
+            #     list_coordinates.append([i, 17])
+            # self.tetris_board.foo(list_coordinates)
+            self.tetris_board.reachability_dfs()
 
         self.tetris_board.move_down()
 
@@ -68,14 +73,14 @@ class Tetris(QMainWindow):
         painter = QPainter(self)
         color = QColor("blue")
         # draw board
-        for i in range(10):
-            for j in range(20):
+        for i in range(self.tetris_board.width):
+            for j in range(self.tetris_board.top_offset, self.tetris_board.height):
                 if self.tetris_board.board_coordinate[i][j] == 1:
-                    painter.fillRect(i * self.grid_size, j * self.grid_size,
+                    painter.fillRect(i * self.grid_size, (j - self.tetris_board.top_offset) * self.grid_size,
                                      self.grid_size, self.grid_size, color)
         # draw current piece
-        for coordinate_x, coordinate_y in self.tetris_board.get_piece_coordinate():
-            painter.fillRect(coordinate_x * self.grid_size, coordinate_y * self.grid_size,
+        for coordinate_x, coordinate_y in self.tetris_board.get_current_piece_coordinate():
+            painter.fillRect(coordinate_x * self.grid_size, (coordinate_y - self.tetris_board.top_offset) * self.grid_size,
                              self.grid_size, self.grid_size, color)
 
 

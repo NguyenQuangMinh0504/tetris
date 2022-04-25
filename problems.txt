@@ -1,1 +1,4 @@
 can not solve the tuck problem yet. Tucking is so freaking hard !!!
+
+23/4/2022
+wrong reachability search results because of heuristic search. Using DFS but it takes too much time.

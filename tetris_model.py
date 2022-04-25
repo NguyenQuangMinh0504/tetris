@@ -22,7 +22,7 @@ class Board:
             [[0, 1], [1, 1], [2, 0], [2, 1]], [[0, 0], [1, 0], [1, 1], [1, 2]]
         ],
         'I_piece': [
-            [[-2, 0], [-1, 0], [0, 0], [1, 0]], [[0, -2], [0, -1], [0, 0], [0, 1]]
+            [[0, 0], [1, 0], [2, 0], [3, 0]], [[0, 0], [0, 1], [0, 2], [0, 3]]
         ],
         'S_piece': [
             [[0, 1], [1, 0], [1, 1], [2, 0]], [[0, 0], [0, 1], [1, 1], [1, 2]]
@@ -100,20 +100,21 @@ class Board:
                                          coordinate_x=self.current_piece_coordinate_x,
                                          coordinate_y=self.current_piece_coordinate_y)
 
-    def check_fit_availability(self, coordinate):
+    def check_fit_availability(self, coordinate, board=None):
         """
         return True if can fit, False if cant using board coordinates of the piece
         :param coordinate:
         :return:
         """
-
+        if board is None:
+            board = self.board_coordinate
         try:
             for x, y in coordinate:
                 if x >= self.width or x <= -1:
                     return False
                 if y >= self.height:
                     return False
-                if self.board_coordinate[x][y] == 1:
+                if board[x][y] == 1:
                     return False
             return True
         except TypeError:

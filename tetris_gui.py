@@ -57,13 +57,15 @@ class Tetris(QMainWindow):
     def timerEvent(self, event: QTimerEvent):
 
         if type(self.tetris_board) == tetris_ai.AI:
-            # self.tetris_board.scan_lines()
-            # list_coordinates = []
-            # for i in range(10):
-            #     list_coordinates.append([i, 18])
-            #     list_coordinates.append([i, 17])
-            # self.tetris_board.foo(list_coordinates)
-            self.tetris_board.reachability_dfs()
+            self.tetris_board.scan_lines()
+            list_coordinates = []
+            for i in range(10):
+                list_coordinates.append([i, 22])
+                list_coordinates.append([i, 21])
+                list_coordinates.append([i, 20])
+                list_coordinates.append([i, 19])
+            self.tetris_board.heuristic_board_reachability_search(list_coordinates)
+            # self.tetris_board.reachability_dfs()
 
         self.tetris_board.move_down()
 
@@ -79,9 +81,19 @@ class Tetris(QMainWindow):
                     painter.fillRect(i * self.grid_size, (j - self.tetris_board.top_offset) * self.grid_size,
                                      self.grid_size, self.grid_size, color)
         # draw current piece
+        color = QColor("green")
         for coordinate_x, coordinate_y in self.tetris_board.get_current_piece_coordinate():
             painter.fillRect(coordinate_x * self.grid_size, (coordinate_y - self.tetris_board.top_offset) * self.grid_size,
                              self.grid_size, self.grid_size, color)
+
+    # def draw_piece(self, coordinate, color):
+    #     painter = QPainter(self)
+    #     color = QColor(color)
+    #     for coordinate_x, coordinate_y in coordinate:
+    #         painter.fillRect(coordinate_x * self.grid_size,
+    #                          (coordinate_y - self.tetris_board.top_offset) * self.grid_size,
+    #                          self.grid_size, self.grid_size, color)
+    #     self.update()
 
 
 if __name__ == "__main__":

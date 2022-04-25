@@ -1,0 +1,1 @@
+Try to replicate NES tetris gameplay and make an AI play tetris

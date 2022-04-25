@@ -103,6 +103,7 @@ class Board:
     def check_fit_availability(self, coordinate, board=None):
         """
         return True if can fit, False if cant using board coordinates of the piece
+        :param board:
         :param coordinate:
         :return:
         """
@@ -130,3 +131,28 @@ class Board:
                 y = self.height - 1
             else:
                 y -= 1
+
+    def print_board(self):
+        for i in range(self.height):
+            print("Line {}".format(i), end="\t")
+            for j in range(self.width):
+                print(self.board_coordinate[j][i], end="\t")
+            print("")
+
+    def print_piece(self, piece, rotate_index, coordinate):
+        new_board = self.board_coordinate.copy()
+        for x, y in self.get_piece_coordinate(piece, rotate_index, coordinate[0], coordinate[1]):
+            new_board[x][y] = 2
+
+        for i in range(self.height):
+            print("Line {}".format(i), end="\t")
+            for j in range(self.width):
+                print(new_board[j][i], end="\t")
+            print("")
+
+
+
+
+
+
+

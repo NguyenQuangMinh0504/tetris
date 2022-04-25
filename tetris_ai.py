@@ -64,8 +64,10 @@ class AI(Board):
                 print(empty_search_board[j][i], end="\t")
             print("")
 
-    def heuristic_coordinate_reachability_search(self, coordinate):
+    def a_star_coordinate_reachability_search(self, coordinate):
+        pass
 
+    def heuristic_coordinate_reachability_search(self, coordinate):
         reachability = True
         for rotate_index in range(len(self.piece_coordinate[self.current_piece])):
             reachability = True
@@ -150,6 +152,42 @@ class AI(Board):
                     self.coordinate_depth_first_search(coordinate_x, coordinate_y, reachability_tetris_board)
                 else:
                     return False
+
+    def coordinate_depth_first_search_ver_1(self, current_piece, current_rotate_index,
+                                            current_coordinate, destination_coordinate, visited):
+        print(current_coordinate)
+
+        if current_coordinate[0] < 0 or current_coordinate[0] >= self.width:
+            return False
+
+        if not self.check_fit_availability(self.get_piece_coordinate(current_piece, current_rotate_index,
+                                                                     destination_coordinate[0],
+                                                                     destination_coordinate[1]),
+                                           self.board_coordinate):
+            return False
+
+        # stopping condition
+        if current_coordinate[0] == destination_coordinate[0] and current_coordinate[1] == destination_coordinate[1]:
+            print("found it")
+            return True
+        if current_coordinate[1] > destination_coordinate[1]:
+            return False
+
+        move_left_coordinate_x = current_coordinate[0] - 1
+        move_left_coordinate_y = current_coordinate[1]
+        if [move_left_coordinate_x, move_left_coordinate_y] not in visited:
+            visited.append([move_left_coordinate_x, move_left_coordinate_y])
+            self.coordinate_depth_first_search_ver_1(current_piece, current_rotate_index,
+                                                     [move_left_coordinate_x, move_left_coordinate_y],
+                                                     destination_coordinate, visited)
+
+        move_right_coordinate_x = current_coordinate[0] + 1
+        move_right_coordinate_y = current_coordinate[1]
+        if [move_right_coordinate_y, move_right_coordinate_y] not in visited:
+            visited.append([move_left_coordinate_x, move_left_coordinate_y])
+            self.coordinate_depth_first_search_ver_1(current_piece, current_rotate_index,
+                                                     [move_right_coordinate_x, move_right_coordinate_y],
+                                                     destination_coordinate, visited)
 
     def scan_lines(self):
         for y in range(self.height - 1, -1, -1):

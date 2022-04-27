@@ -33,13 +33,14 @@ if __name__ == "__main__":
     sample_tetris.tetris_board.board_coordinate[5][19] = 0
 
     sample_tetris.tetris_board.current_piece = "I_piece"
-    sample_tetris.tetris_board.print_piece(sample_tetris.tetris_board.current_piece, 1, [5, 20])
+    sample_tetris.tetris_board.print_piece(sample_tetris.tetris_board.current_piece, 1, [5, 5])
 
     visited = []
-    sample_tetris.tetris_board.coordinate_depth_first_search_ver_1(sample_tetris.tetris_board.current_piece,
-                                                                  1,
-                                                                  [5, 20],
-                                                                  [6, 20],
-                                                                   visited)
+    sample_tetris.tetris_board.recursive_depth_first_search(sample_tetris.tetris_board.current_piece,
+                                                            1,
+                                                            [5, 5],
+                                                            [6, 20],
+                                                            visited)
+    print(visited)
 
     # sys.exit(app.exec_())

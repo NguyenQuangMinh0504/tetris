@@ -121,6 +121,11 @@ class Board:
         except TypeError:
             raise Exception("The coordinate {} is not in the right format".format(coordinate))
 
+    def check_legit_coordinate(self, coordinate):
+        if coordinate[0] < 0 or coordinate[0] >= self.width or coordinate[1] >= self.height:
+            return False
+        return True
+
     def clear_lines(self):
         y = self.height - 1
         while y != 0:
@@ -132,11 +137,13 @@ class Board:
             else:
                 y -= 1
 
-    def print_board(self):
+    def print_board(self, board):
+        if board is None:
+            board = self.board_coordinate
         for i in range(self.height):
             print("Line {}".format(i), end="\t")
             for j in range(self.width):
-                print(self.board_coordinate[j][i], end="\t")
+                print(board[j][i], end="\t")
             print("")
 
     def print_piece(self, piece, rotate_index, coordinate):
@@ -149,10 +156,3 @@ class Board:
             for j in range(self.width):
                 print(new_board[j][i], end="\t")
             print("")
-
-
-
-
-
-
-

@@ -34,13 +34,6 @@ if __name__ == "__main__":
 
     sample_tetris.tetris_board.current_piece = "I_piece"
     sample_tetris.tetris_board.print_piece(sample_tetris.tetris_board.current_piece, 1, [5, 5])
-
-    visited = []
-    sample_tetris.tetris_board.recursive_depth_first_search(sample_tetris.tetris_board.current_piece,
-                                                            1,
-                                                            [5, 5],
-                                                            [6, 20],
-                                                            visited)
-    print(visited)
+    sample_tetris.tetris_board.non_recursive_depth_first_search(sample_tetris.tetris_board.current_piece, 1, [5, 5], [6, 20])
 
     # sys.exit(app.exec_())

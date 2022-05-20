@@ -81,7 +81,7 @@ class Tetris(QMainWindow):
                     painter.fillRect(i * self.grid_size, (j - self.tetris_board.top_offset) * self.grid_size,
                                      self.grid_size, self.grid_size, color)
         # draw current piece
-        color = QColor("green")
+        color = QColor("blue")
         for coordinate_x, coordinate_y in self.tetris_board.get_current_piece_coordinate():
             painter.fillRect(coordinate_x * self.grid_size, (coordinate_y - self.tetris_board.top_offset) * self.grid_size,
                              self.grid_size, self.grid_size, color)
